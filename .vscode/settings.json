@@ -1,0 +1,17 @@
+{
+    "python.pythonPath": "myprojvenv\\Scripts\\python.exe",
+    "files.autoSave": "onWindowChange",
+    
+        "python.linting.pylintArgs": [
+            "--load-plugins=pylint_django",
+            "--disable=missing-module-docstring",
+            "--disable=empty-docstring",
+            "--disable=missing-function-docstring",
+            "--disable=missing-class-docstring",
+            "--disable=trailing-newlines",
+            "--disable=trailing-whitespace",
+            "--disable=django-not-configured"
+        ],
+    
+    
+}
