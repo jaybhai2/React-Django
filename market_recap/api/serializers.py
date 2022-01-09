@@ -1,6 +1,6 @@
 
 from rest_framework import serializers
-from .models import StockProfile, WatchList
+from .models import StockProfile, WatchList, Overview, Valuation
 
 
 class StockProfileSerializer(serializers.ModelSerializer):
@@ -26,3 +26,13 @@ class WatchListSerializer(serializers.ModelSerializer):
         model = WatchList
         fields = '__all__'
         
+
+class StockOverviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Overview
+        fields = '__all__'
+        
+class StockValuationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Valuation
+        fields = '__all__'

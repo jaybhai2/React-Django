@@ -8,9 +8,11 @@ from lxml import etree, html
 
 def get_table(page_html: requests.Response, headers, rows=None, **kwargs):
     """ Private function used to return table data inside a list of dictionaries. """
+    
     if isinstance(page_html, str):
         page_parsed = html.fromstring(page_html)
     else:
+        
         page_parsed = html.fromstring(page_html.text)
     # When we call this method from Portfolio we don't fill the rows argument.
     # Conversely, we always fill the rows argument when we call this method from Screener.
@@ -41,17 +43,23 @@ def get_table(page_html: requests.Response, headers, rows=None, **kwargs):
 
 def get_total_rows(page_content):
     """ Returns the total number of rows(results). """
-
+    
     total_element = page_content.cssselect('td[width="140"]')
-    total_number = (
-        etree.tostring(total_element[0]).decode("utf-8").split("</b>")[1].split()[0]
-    )
+    
+    try:
+        total_number = (
+            etree.tostring(total_element[0]).decode("utf-8").split("</b>")[1].split()[0]
+        )
+    except IndexError as e:
+        print(page_content.text)
+        raise e
 
     try:
         return int(total_number)
     except ValueError:
-        return 0
 
+        return 0
+    
 
 def get_page_urls(page_content, rows, url):
     """ Returns a list containing all of the page URL addresses. """

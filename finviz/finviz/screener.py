@@ -342,6 +342,9 @@ class Screener(object):
 
         return export_to_csv(self.headers, self.data, f"{filename}.csv")
 
+    
+
+
     def get_charts(self, period="d", size="l", chart_type="c", ta="1"):
         """
         Downloads the charts of all tickers shown by the table.

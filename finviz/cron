@@ -1,0 +1,14 @@
+
+#open crontab editor
+crontab -e
+
+"""
+MAILTO=""
+PATH="/usr/local/bin:/usr/bin:/bin"
+
+0 22 * * * python3 /home/ec2-user/finviz/app.py > stdout.log 2>&1
+
+"""
+
+#check cron log
+cat /var/log/cron

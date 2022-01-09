@@ -108,6 +108,7 @@ class Connector:
                     raise Exception("Too many requests.")
 
                 if self.css_select:
+                  
                     return self.scrape_function(
                         html.fromstring(page_html), *self.arguments
                     )

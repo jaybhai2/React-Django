@@ -1,19 +1,28 @@
+
+import time
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics, status
 
-from .models import StockProfile, WatchList
-from .serializers import StockProfileSerializer, AddToWatchListSerializer, WatchListSerializer
+from .models import StockProfile, WatchList, Overview
+from .serializers import StockProfileSerializer, AddToWatchListSerializer, WatchListSerializer, StockOverviewSerializer
 
 
 # Create your views here.
 
-
-
 def main(request):
     return HttpResponse("<h1>hello</h1>")
+
+def timer(func):
+    def wrapper(*args, **kwrags):
+        t_start = time.time()
+        func_return = func(*args, **kwrags)
+        t_elapse = time.time() - t_start
+        print(t_elapse)
+        return func_return
+    return wrapper
 
 
 
@@ -25,16 +34,21 @@ class StockProfileView(generics.ListAPIView):
     serializer_class = StockProfileSerializer 
     
 
+class StockOverviewView(generics.ListAPIView):
+    """
+    List all stock profiles
+    """
+    queryset = Overview.objects.all()
+    serializer_class = StockOverviewSerializer 
+    
+
 
 class GetStockProfile(APIView):
     serializer = StockProfileSerializer
+    @timer
     def get(self, request, ticker):
-        print(request)
-        print(ticker)
         queryset = StockProfile.objects.filter(ticker=ticker)
-        print(queryset)
         resultset = self.serializer(queryset, many=True)
-        print(resultset.data)
         return Response(data=resultset.data)
 
 
